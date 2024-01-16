@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -66,6 +68,10 @@ dependencies {
     // Photo
     implementation("io.coil-kt:coil:2.5.0")
 
+    // Maps
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    
     testImplementation("junit:junit:4.13.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.2.1")
     testImplementation("org.testng:testng:6.9.6")

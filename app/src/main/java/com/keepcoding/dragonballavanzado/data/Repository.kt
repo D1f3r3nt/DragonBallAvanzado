@@ -22,6 +22,8 @@ class Repository @Inject constructor(
     suspend fun getHeros(): List<HeroUI> {
         val token = getToken()
         
+        // TODO: Mirar si hay datos nuevos
+        
         val localHeros: List<HeroLocal> = localDataSource.getHeros()
         
         return if (localHeros.isNotEmpty()) {
@@ -42,6 +44,12 @@ class Repository @Inject constructor(
             val updateLocalHeros: List<HeroLocal> = localDataSource.getHeros()
             updateLocalHeros.map { it.mapToUI() }
         }
+    }
+
+    suspend fun getHeroDetail(id: String): HeroUI {
+        val heroLocal = localDataSource.getHeroDetail(id)
+
+        return heroLocal.mapToUI()
     }
     
     fun getToken(): String? {

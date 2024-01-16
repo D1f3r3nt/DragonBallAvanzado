@@ -14,6 +14,10 @@ class LocalDataSource @Inject constructor(
 
     fun getHeros() = this.dao.getAll()
 
+    fun getHeroDetail(id: String) : HeroLocal {
+        return dao.getHeroDetail(id)
+    }
+    
     fun insertHeros(heros: List<HeroLocal>) {
         dao.insertAll(heros)
     }

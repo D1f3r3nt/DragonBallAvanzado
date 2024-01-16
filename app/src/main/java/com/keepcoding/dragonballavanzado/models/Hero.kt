@@ -27,7 +27,7 @@ fun HeroRemote.mapToLocal(): HeroLocal {
 }
 
 fun HeroRemote.mapToUI(): HeroUI {
-    return HeroUI(this.name, this.photo, this.description, this.favorite)
+    return HeroUI(this.id, this.name, this.photo, this.description, this.favorite)
 }
 
 @Entity(tableName = "heros")
@@ -50,10 +50,11 @@ data class HeroLocal (
 )
 
 fun HeroLocal.mapToUI(): HeroUI {
-    return HeroUI(this.name, this.photo, this.description, this.favorite)
+    return HeroUI(this.id, this.name, this.photo, this.description, this.favorite)
 }
 
 data class HeroUI (
+    val id: String,
     val name: String,
     val photo: String,
     val description: String,

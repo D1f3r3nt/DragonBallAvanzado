@@ -7,13 +7,25 @@ import coil.load
 import com.keepcoding.dragonballavanzado.databinding.ItemHomeBinding
 import com.keepcoding.dragonballavanzado.models.HeroUI
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(
+    private val onClick: (HeroUI) -> Unit
+) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     
     private var heros = emptyList<HeroUI>()
     
-    class HomeViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+        
+        private lateinit var heroUI: HeroUI
+        
+        init {
+            binding.root.setOnClickListener { 
+                onClick(this.heroUI)
+            }
+        }
         
         fun bind(hero: HeroUI) {
+            this.heroUI = hero
+            
             with(binding) {
                 heroName.text = hero.name
                 heroPhoto.load(hero.photo)
