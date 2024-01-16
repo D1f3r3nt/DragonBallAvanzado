@@ -14,14 +14,20 @@ data class HeroRemote (
 
     @Json(name = "photo")
     val photo: String,
+
+    @Json(name = "description")
+    val description: String,
+    
+    @Json(name = "favorite")
+    val favorite: Boolean,
 )
 
 fun HeroRemote.mapToLocal(): HeroLocal {
-    return HeroLocal(this.id, this.name, this.photo)
+    return HeroLocal(this.id, this.name, this.photo, this.description, this.favorite)
 }
 
 fun HeroRemote.mapToUI(): HeroUI {
-    return HeroUI(this.name, this.photo)
+    return HeroUI(this.name, this.photo, this.description, this.favorite)
 }
 
 @Entity(tableName = "heros")
@@ -35,13 +41,21 @@ data class HeroLocal (
 
     @ColumnInfo(name = "photo")
     val photo: String,
+
+    @ColumnInfo(name = "description")
+    val description: String,
+
+    @ColumnInfo(name = "favorite")
+    val favorite: Boolean,
 )
 
 fun HeroLocal.mapToUI(): HeroUI {
-    return HeroUI(this.name, this.photo)
+    return HeroUI(this.name, this.photo, this.description, this.favorite)
 }
 
 data class HeroUI (
     val name: String,
-    val photo: String
+    val photo: String,
+    val description: String,
+    val favorite: Boolean,
 )

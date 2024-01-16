@@ -31,10 +31,6 @@ class HomeViewModel @Inject constructor(
             val heros = withContext(Dispatchers.IO) {
                 repository.getHeros()
             }
-
-            if (heros.isEmpty()) {
-                _state.value = ErrorState("Response is empty")
-            }
             
             _heros.value = heros
         }

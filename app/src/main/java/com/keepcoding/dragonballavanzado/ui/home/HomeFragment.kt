@@ -44,19 +44,7 @@ class HomeFragment : Fragment() {
         setObservers()
     }
 
-    private fun handleErrorState(error: ErrorState) {
-        Toast.makeText(requireContext(), error.msg, Toast.LENGTH_LONG).show()
-    }
-
     private fun setObservers() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is ErrorState -> handleErrorState(state)
-                    else -> {}
-                }
-            }
-        }
         
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.heros.collect { heros ->

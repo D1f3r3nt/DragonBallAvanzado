@@ -1,13 +1,21 @@
 package com.keepcoding.dragonballavanzado.data.local
 
+import com.keepcoding.dragonballavanzado.models.HeroLocal
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
-    private val preferencesDatabase: PreferencesDatabase
+    private val preferencesDatabase: PreferencesDatabase,
+    private val dao: HeroDAO
 ) {
     
     companion object {
         val TOKEN = "token_private"
+    }
+
+    fun getHeros() = this.dao.getAll()
+
+    fun insertHeros(heros: List<HeroLocal>) {
+        dao.insertAll(heros)
     }
     
     fun getToken(): String? {
