@@ -10,14 +10,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="Details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/black_orange"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/favoriteIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/black_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        </androidx.cardview.widget.CardView>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/photoHero"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/fondo2" />
+
+            <TextView
+                android:id="@+id/nameHero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="Goku" />
+            
+            <TextView
+                android:id="@+id/descriptionHero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="cbdkjabckjabckjsabc asbckjasbc asc as casc as c asc as cas cas c as c asc as c as cas cas c cbdkjabckjabckjsabc asbckjasbc asc as casc as c asc as cas cas c as c asc as c as cas cas c cbdkjabckjabckjsabc asbckjasbc asc as casc as c asc as cas cas c as c asc as c as cas cas c cbdkjabckjabckjsabc asbckjasbc asc as casc as c asc as cas cas c as c asc as c as cas cas c cbdkjabckjabckjsabc asbckjasbc asc as casc as c asc as cas cas c as c asc as c as cas cas c"
+                android:textSize="17sp"
+                android:padding="8dp"
+                android:maxLines="5"
+                android:ellipsize="end" />
+            
+            <!-- MAPS -->
+            
+        </LinearLayout>
+            
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,21 +14,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/hero_photo"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="8dp">
 
-            <TextView
-                android:id="@+id/hero_name"
+                <ImageView
+                    android:id="@+id/hero_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:srcCompat="@drawable/fondo2" />
+                
+            </androidx.cardview.widget.CardView>
+            
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20sp"
-                tools:text="Hola"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <TextView
+                    android:id="@+id/hero_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="Goku" />
+
+                <TextView
+                    android:id="@+id/hero_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:textSize="17sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    tools:text="Goku Goku Goku Goku Goku Goku Goku Goku Goku Gokuv Goku Goku v Goku Goku Gokuv GokuGoku vGoku"/>
+                
+            </LinearLayout>
 
         </LinearLayout>
 

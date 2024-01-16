@@ -17,6 +17,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             with(binding) {
                 heroName.text = hero.name
                 heroPhoto.load(hero.photo)
+                heroDescription.text = hero.description
             }
         }
     }
