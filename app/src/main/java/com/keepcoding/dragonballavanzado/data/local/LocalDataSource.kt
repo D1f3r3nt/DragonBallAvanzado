@@ -18,8 +18,16 @@ class LocalDataSource @Inject constructor(
         return dao.getHeroDetail(id)
     }
     
+    fun postTogleFavorite(id: String) {
+        dao.postTogleFavorite(id)
+    }
+    
     fun insertHeros(heros: List<HeroLocal>) {
         dao.insertAll(heros)
+    }
+    
+    fun deleteAll() {
+        dao.deleteAll()
     }
     
     fun getToken(): String? {

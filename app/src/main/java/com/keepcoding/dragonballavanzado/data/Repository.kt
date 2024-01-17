@@ -9,6 +9,7 @@ import com.keepcoding.dragonballavanzado.models.LocationRemote
 import com.keepcoding.dragonballavanzado.models.LocationUI
 import com.keepcoding.dragonballavanzado.models.mapToLocal
 import com.keepcoding.dragonballavanzado.models.mapToUI
+import okhttp3.internal.EMPTY_RESPONSE
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -23,29 +24,22 @@ class Repository @Inject constructor(
     
     suspend fun getHeros(): List<HeroUI> {
         val token = getToken()
-        
-        // TODO: Mirar si hay datos nuevos
-        
-        val localHeros: List<HeroLocal> = localDataSource.getHeros()
-        
-        return if (localHeros.isNotEmpty()) {
-            
-            localHeros.map { it.mapToUI() }
-        } else {
-            
-            // Get from network
-            var remoteHeros: List<HeroRemote> = emptyList()
-            token?.let { 
-                remoteHeros = remoteDataSource.getHeros(it)
-            }
-            
-            // Save in local
-            localDataSource.insertHeros(remoteHeros.map { it.mapToLocal() })
 
-            // Get from local
-            val updateLocalHeros: List<HeroLocal> = localDataSource.getHeros()
-            updateLocalHeros.map { it.mapToUI() }
+        // Borrar BDD
+        localDataSource.deleteAll()
+        
+        // Get from network
+        var remoteHeros: List<HeroRemote> = emptyList()
+        token?.let {
+            remoteHeros = remoteDataSource.getHeros(it)
         }
+
+        // Save in BDD
+        localDataSource.insertHeros(remoteHeros.map { it.mapToLocal() })
+
+        // Get from BDD
+        val updateLocalHeros: List<HeroLocal> = localDataSource.getHeros()
+        return updateLocalHeros.map { it.mapToUI() }
     }
     
     suspend fun getLocations(heroID: String): List<LocationUI> {
@@ -57,6 +51,23 @@ class Repository @Inject constructor(
         }
         
         return locations.map { it.mapToUI() }
+    }
+
+    suspend fun postTogleFavorite(heroID: String): Response<Unit> {
+        val token = getToken()
+
+        // Remote
+        var response: Response<Unit> = Response.error(404, EMPTY_RESPONSE)
+        token?.let {
+            response = remoteDataSource.postTogleFavorite(token, heroID)
+        }
+        
+        // Local
+        if (response.code() == 201) {
+            localDataSource.postTogleFavorite(heroID)
+        }
+
+        return response
     }
 
     suspend fun getHeroDetail(id: String): HeroUI {

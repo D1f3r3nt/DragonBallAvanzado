@@ -13,7 +13,13 @@ interface HeroDAO {
 
     @Query("SELECT * FROM heros WHERE id = :id")
     fun getHeroDetail(id: String): HeroLocal
+
+    @Query("UPDATE heros SET favorite = NOT favorite WHERE id = :id")
+    fun postTogleFavorite(id: String)
     
     @Insert
     fun insertAll(heros: List<HeroLocal>)
+
+    @Query("DELETE FROM heros")
+    fun deleteAll()
 }

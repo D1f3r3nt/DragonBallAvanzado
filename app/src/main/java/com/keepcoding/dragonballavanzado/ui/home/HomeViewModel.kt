@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keepcoding.dragonballavanzado.data.Repository
 import com.keepcoding.dragonballavanzado.models.HeroUI
-import com.keepcoding.dragonballavanzado.models.commons.ErrorState
-import com.keepcoding.dragonballavanzado.models.commons.Idle
-import com.keepcoding.dragonballavanzado.models.commons.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,10 +18,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _heros = MutableStateFlow<List<HeroUI>>(emptyList())
-    private val _state = MutableStateFlow<State>(Idle())
 
     val heros: StateFlow<List<HeroUI>> = _heros
-    val state: StateFlow<State> = _state
 
     fun getHeroList() {
         viewModelScope.launch {

@@ -36,6 +36,7 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        
         binding = FragmentDetailsBinding.inflate(inflater)
         return binding.root
     }
@@ -54,6 +55,7 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        
         mMap = googleMap
     }
 
@@ -71,14 +73,14 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
     }
     
     private fun setListeners() {
+        
         binding.back.setOnClickListener {
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToHomeFragment())
         }
 
         binding.favoriteIcon.setOnClickListener {
-            // TODO: Toggle favorite
+            viewModel.togleFavorite(args.heroID)
         }
-
     }
 
 
@@ -92,24 +94,32 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
                         photoHero.load(it.photo)
                         nameHero.text = it.name
                         descriptionHero.text = it.description
-
-                        val icon = if (it.favorite) {
-                            android.R.drawable.btn_star_big_on
-                        } else {
-                            android.R.drawable.btn_star_big_off
-                        }
-
-                        favoriteIcon.setImageResource(icon)
                     }
                 }
-
             }
         }
 
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.locations.collect { locations ->
+                
                 if (locations.isNotEmpty()) {
                     fullMaps(locations)
+                }
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.isFavorite.collect { isFavorite ->
+                
+                with(binding) {
+                    
+                    val icon = if (isFavorite) {
+                        android.R.drawable.btn_star_big_on
+                    } else {
+                        android.R.drawable.btn_star_big_off
+                    }
+
+                    favoriteIcon.setImageResource(icon)
                 }
             }
         }

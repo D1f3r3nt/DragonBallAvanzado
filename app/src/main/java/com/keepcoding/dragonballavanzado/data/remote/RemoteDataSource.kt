@@ -1,6 +1,7 @@
 package com.keepcoding.dragonballavanzado.data.remote
 
 import com.keepcoding.dragonballavanzado.data.remote.apis.DragonBallApi
+import com.keepcoding.dragonballavanzado.data.remote.requests.FavoriteRequest
 import com.keepcoding.dragonballavanzado.data.remote.requests.HeroRequest
 import com.keepcoding.dragonballavanzado.data.remote.requests.LocationRequest
 import com.keepcoding.dragonballavanzado.models.HeroRemote
@@ -29,6 +30,12 @@ class RemoteDataSource @Inject constructor(
         val auth = bearerToken(token)
 
         return api.getLocations(auth, LocationRequest(heroID))
+    }
+    
+    suspend fun postTogleFavorite(token: String, heroID: String): Response<Unit> {
+        val auth = bearerToken(token)
+
+        return api.postTogleFavorite(auth, FavoriteRequest(heroID))
     }
 
     private fun basicAuth(username: String, password: String): String {

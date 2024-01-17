@@ -1,5 +1,6 @@
 package com.keepcoding.dragonballavanzado.data.remote.apis
 
+import com.keepcoding.dragonballavanzado.data.remote.requests.FavoriteRequest
 import com.keepcoding.dragonballavanzado.data.remote.requests.HeroRequest
 import com.keepcoding.dragonballavanzado.data.remote.requests.LocationRequest
 import com.keepcoding.dragonballavanzado.models.HeroRemote
@@ -27,5 +28,11 @@ interface DragonBallApi {
         @Header("Authorization") auth: String,
         @Body locationRequest: LocationRequest
     ): List<LocationRemote>
+
+    @POST("/api/data/herolike")
+    suspend fun postTogleFavorite(
+        @Header("Authorization") auth: String,
+        @Body favoriteRequest: FavoriteRequest
+    ): Response<Unit>
 
 }
