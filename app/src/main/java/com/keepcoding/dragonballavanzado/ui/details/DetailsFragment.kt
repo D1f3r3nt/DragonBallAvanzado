@@ -14,10 +14,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.keepcoding.dragonballavanzado.R
 import com.keepcoding.dragonballavanzado.databinding.FragmentDetailsBinding
+import com.keepcoding.dragonballavanzado.models.LocationUI
+import com.keepcoding.dragonballavanzado.models.getLatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,6 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var mMap: GoogleMap
-
 
     private val args: DetailsFragmentArgs by navArgs()
     private val viewModel: DetailsViewModel by viewModels()
@@ -44,6 +44,8 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getHeroDetail(args.heroID)
+        viewModel.getLocations(args.heroID)
+        
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -51,6 +53,23 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
         setObservers()
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+    }
+
+    private fun fullMaps(locations: List<LocationUI>) {
+        
+        locations.forEach { location ->
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(location.getLatLng())
+                    .title(location.dateShow.split('T')[0])
+            )
+        }
+        
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(locations[0].getLatLng()))
+    }
+    
     private fun setListeners() {
         binding.back.setOnClickListener {
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToHomeFragment())
@@ -60,18 +79,6 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
             // TODO: Toggle favorite
         }
 
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(
-            MarkerOptions()
-            .position(sydney)
-            .title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
 
@@ -96,6 +103,14 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
 
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.locations.collect { locations ->
+                if (locations.isNotEmpty()) {
+                    fullMaps(locations)
+                }
             }
         }
     }

@@ -2,7 +2,9 @@ package com.keepcoding.dragonballavanzado.data.remote
 
 import com.keepcoding.dragonballavanzado.data.remote.apis.DragonBallApi
 import com.keepcoding.dragonballavanzado.data.remote.requests.HeroRequest
+import com.keepcoding.dragonballavanzado.data.remote.requests.LocationRequest
 import com.keepcoding.dragonballavanzado.models.HeroRemote
+import com.keepcoding.dragonballavanzado.models.LocationRemote
 import retrofit2.Response
 import java.util.Base64
 import javax.inject.Inject
@@ -21,6 +23,12 @@ class RemoteDataSource @Inject constructor(
         val auth = bearerToken(token)
         
         return api.getHeros(auth, HeroRequest(""))
+    }
+
+    suspend fun getLocations(token: String, heroID: String): List<LocationRemote> {
+        val auth = bearerToken(token)
+
+        return api.getLocations(auth, LocationRequest(heroID))
     }
 
     private fun basicAuth(username: String, password: String): String {

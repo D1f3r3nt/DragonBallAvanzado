@@ -5,6 +5,8 @@ import com.keepcoding.dragonballavanzado.data.remote.RemoteDataSource
 import com.keepcoding.dragonballavanzado.models.HeroLocal
 import com.keepcoding.dragonballavanzado.models.HeroRemote
 import com.keepcoding.dragonballavanzado.models.HeroUI
+import com.keepcoding.dragonballavanzado.models.LocationRemote
+import com.keepcoding.dragonballavanzado.models.LocationUI
 import com.keepcoding.dragonballavanzado.models.mapToLocal
 import com.keepcoding.dragonballavanzado.models.mapToUI
 import retrofit2.Response
@@ -44,6 +46,17 @@ class Repository @Inject constructor(
             val updateLocalHeros: List<HeroLocal> = localDataSource.getHeros()
             updateLocalHeros.map { it.mapToUI() }
         }
+    }
+    
+    suspend fun getLocations(heroID: String): List<LocationUI> {
+        val token = getToken()
+        
+        var locations: List<LocationRemote> = emptyList()
+        token?.let {
+            locations = remoteDataSource.getLocations(token, heroID)
+        }
+        
+        return locations.map { it.mapToUI() }
     }
 
     suspend fun getHeroDetail(id: String): HeroUI {
