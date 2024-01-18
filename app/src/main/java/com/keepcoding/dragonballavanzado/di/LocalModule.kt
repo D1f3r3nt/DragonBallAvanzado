@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.keepcoding.dragonballavanzado.data.local.HeroDAO
+import com.keepcoding.dragonballavanzado.data.local.LocalDataSource
+import com.keepcoding.dragonballavanzado.data.local.LocalDataSourceInterface
 import com.keepcoding.dragonballavanzado.data.local.database.HeroDatabase
 import dagger.Module
 import dagger.Provides
@@ -34,5 +36,10 @@ class LocalModule {
     @Provides
     fun providesHeroDao(db: HeroDatabase): HeroDAO {
         return db.heroDao()
+    }
+
+    @Provides
+    fun providesLocalDataSourceInterface(localDataSource: LocalDataSource): LocalDataSourceInterface {
+        return localDataSource
     }
 }

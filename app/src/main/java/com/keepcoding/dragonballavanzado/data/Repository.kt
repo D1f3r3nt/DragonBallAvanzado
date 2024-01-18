@@ -1,6 +1,6 @@
 package com.keepcoding.dragonballavanzado.data
 
-import com.keepcoding.dragonballavanzado.data.local.LocalDataSource
+import com.keepcoding.dragonballavanzado.data.local.LocalDataSourceInterface
 import com.keepcoding.dragonballavanzado.data.remote.RemoteDataSource
 import com.keepcoding.dragonballavanzado.models.HeroLocal
 import com.keepcoding.dragonballavanzado.models.HeroRemote
@@ -14,7 +14,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class Repository @Inject constructor(
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: LocalDataSourceInterface,
     private val remoteDataSource: RemoteDataSource,
 ) {
     

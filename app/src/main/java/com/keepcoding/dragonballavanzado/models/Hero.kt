@@ -46,7 +46,7 @@ data class HeroLocal (
     val description: String,
 
     @ColumnInfo(name = "favorite")
-    val favorite: Boolean,
+    var favorite: Boolean,
 )
 
 fun HeroLocal.mapToUI(): HeroUI {
