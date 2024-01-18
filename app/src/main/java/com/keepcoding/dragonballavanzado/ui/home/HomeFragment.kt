@@ -42,7 +42,14 @@ class HomeFragment : Fragment() {
             heroList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
+        setListeners()
         setObservers()
+    }
+
+    private fun setListeners() {
+        binding.favoriteIcon.setOnClickListener { 
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoriteFragment())
+        }
     }
 
     private fun setObservers() {
