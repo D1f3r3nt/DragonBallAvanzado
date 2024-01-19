@@ -54,7 +54,19 @@ class RemoteDataSourceTest {
         val heroList = remoteDataSource.getHeros("")
         
         // THEN
-        Assert.assertEquals(true, heroList.isNotEmpty())
+        Assert.assertTrue(heroList.isNotEmpty())
+    }
+
+    @Test
+    fun `WHEN getLocations THEN succes list`() = runTest {
+        // GIVEN
+        val remoteDataSource = RemoteDataSource(api)
+
+        // WHEN
+        val locationsList = remoteDataSource.getLocations("", "")
+
+        // THEN
+        Assert.assertTrue(locationsList.isNotEmpty())
     }
     
     @After

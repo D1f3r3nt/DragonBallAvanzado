@@ -35,4 +35,18 @@ class RepostioryTest {
         coVerify(exactly = 1) { remoteDataSource.getHeros("") }
         assertEquals(10, actual.size)
     }
+
+    @Test
+    fun `WHEN getHeroDetail THEN get from local`() = runTest {
+        val repository = Repository(localDataSource, remoteDataSource)
+        val id = "id1"
+        
+        val expectedRemote = generateRemoteHeroes(10)
+        coEvery { remoteDataSource.getHeros("") } returns expectedRemote
+
+        repository.getHeros()
+        val actual = repository.getHeroDetail(id)
+
+        assertEquals(id, actual.id)
+    }
 }

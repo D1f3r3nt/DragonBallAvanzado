@@ -10,6 +10,13 @@ import java.net.HttpURLConnection
 class MockWebDispatcher() : Dispatcher() {
     
     override fun dispatch(request: RecordedRequest): MockResponse {
+        
+        if (request.path?.contains("locations") == true) {
+            return MockResponse()
+                .setResponseCode(HttpURLConnection.HTTP_OK)
+                .setBody(getJson("json/locations.json"))
+        }
+        
         return MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_OK)
             .setBody(getJson("json/heros.json"))
